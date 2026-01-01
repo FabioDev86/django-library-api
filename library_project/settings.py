@@ -23,10 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-8r#r1!003k2)6h*fwr0#iem*h1d(u^fct*)2pv4d+$=4h&p9nr'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Legge la variabile d'ambiente 'DEBUG'. 
+# Se non la trova (come sul tuo PC), di default usa True.
+DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Aggiungi anche questo, è fondamentale per Render!
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -132,6 +134,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Aggiungi questa riga:
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Opzionale ma consigliato per Render:
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", # L'indirizzo di Next.js
